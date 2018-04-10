@@ -44,4 +44,41 @@ public class ShapeCanvas extends JPanel
 		this.setPreferredSize(new Dimension(600, 600));
 		this.setMaximumSize(getPreferredSize());
 	}
+	
+	public void addShape(Shape current)
+	{
+		
+	}
+	
+	public void clear()
+	{
+		
+	}
+	
+	public void changeBackground()
+	{
+		
+	}
+	
+	public void save()
+	{
+		
+	}
+	
+	private Color randomColor()
+	{
+		return null;
+	}
+	
+	private void updateImage()
+	{
+		
+	}
+	
+	@Override
+	protected void paintComponent(Graphics graphics)
+	{
+		super.paintComponent(graphics);
+		graphics.drawImage(canvasImage, 0, 0, null);
+	}
 }
