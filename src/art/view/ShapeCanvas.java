@@ -47,7 +47,26 @@ public class ShapeCanvas extends JPanel
 	
 	public void addShape(Shape current)
 	{
-		
+		if (current instanceof Polygon)
+		{
+			if (((Polygon)current).xpoints.length == 3)
+			{
+				triangleList.add((Polygon) current);
+			}
+			else
+			{
+				polygonList.add((Polygon)current);
+			}
+		}
+		else if (current instanceof Ellipse2D)
+		{
+			ellipseList.add((Ellipse2D)current);
+		}
+		else
+		{
+			rectangleList.add((Rectangle)current);
+		}
+		updateImage();
 	}
 	
 	public void clear()
