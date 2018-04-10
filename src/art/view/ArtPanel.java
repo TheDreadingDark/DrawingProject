@@ -165,6 +165,7 @@ public class ArtPanel extends JPanel
 			int height = (int)(Math.random() * currentScale) + 1;
 			currentRectangle = new Rectangle(cornerX, cornerY, width, height);
 		}
+		
 	}
 	
 	private Ellipse2D createEllipse()
@@ -183,14 +184,68 @@ public class ArtPanel extends JPanel
 			double height = Math.random() * currentScale + 1;
 			ellipse.setFrame(cornerX, cornerY, width, height);
 		}
-	}
-	
-	public void setupLayout()
-	{
 		
+		return ellipse;
 	}
 	
 	public void setupListeners()
+	{
+		rectangleButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				Rectangle rectangle = createRectangle();
+				canvas.addShape(rectangle);
+			}
+		});
+		
+		triangleButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				Polygon triangle = createPolygon(3);
+				canvas.addShape(triangle);
+			}
+		});
+		
+		polygonButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				Polygon polygon = createPolygon(currentEdgeCount);
+				canvas.addShape(polygon);
+			}
+		});
+		
+		ellipseButton.addActionListener(new ActionListener()
+		{
+			public void actionPerformed(ActionEvent click)
+			{
+				Ellipse2D ellipse = createEllipse();
+				canvas.addShape(ellipse);
+			}
+		});
+		
+		clearButton.addActionListener(click -> canvas.clear());
+		
+		saveButton.addActionListener(click -> canvas.save());
+		
+		colorButton.addActionListener(click -> canvas.changeBackground());
+		
+		scaleSlider.addChangeListener(new ChangeListener()
+		{
+			@Override
+			public void stateChanged(ChangeEvent e)
+			{
+				if (!scaleSlider.getValueIsAdjusting())
+				{
+					currentScale = scaleSlider.getValue();
+				}
+			}
+		});
+	}
+	
+	public void setupLayout()
 	{
 		
 	}
