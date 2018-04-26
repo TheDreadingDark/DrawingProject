@@ -8,6 +8,9 @@ import java.awt.Polygon;
 import java.awt.Rectangle;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseEvent;
+import java.awt.event.MouseListener;
+import java.awt.event.MouseMotionListener;
 import java.awt.geom.Ellipse2D;
 import java.util.Hashtable;
 
@@ -155,7 +158,8 @@ public class ArtPanel extends JPanel
 		
 		int cornerX = (int) (Math.random() * 600);
 		int cornerY = (int) (Math.random() * 600);
-		double width = Math.random() * currentScale + 1;
+		int width = (int) (Math.random() * currentScale) + 1;
+		
 		if (coinFlip())
 		{
 			currentRectangle = new Rectangle(cornerX, cornerY, width, width);
@@ -165,6 +169,8 @@ public class ArtPanel extends JPanel
 			int height = (int)(Math.random() * currentScale) + 1;
 			currentRectangle = new Rectangle(cornerX, cornerY, width, height);
 		}
+		
+		return currentRectangle;
 		
 	}
 	
@@ -253,6 +259,52 @@ public class ArtPanel extends JPanel
 				{
 					currentEdgeCount = edgeSlider.getValue();
 				}
+			}
+		});
+		
+		canvas.addMouseMotionListener(new MouseMotionListener()
+		{
+			@Override
+			public void mouseDragged(MouseEvent drag)
+			{
+				int x = drag.getX();
+				int y = drag.getY();
+				canvas.drawOnCanvas(x, y, currentEdgeCount);
+			}
+			
+			@Override
+			public void mouseMoved(MouseEvent move)
+			{
+			}
+		});
+		
+		canvas.addMouseListener(new MouseListener()
+		{
+			@Override
+			public void mouseClicked(MouseEvent e)
+			{
+			}
+			
+			@Override
+			public void mousePressed(MouseEvent e)
+			{
+			}
+			
+			@Override
+			public void mouseReleased(MouseEvent e)
+			{
+				canvas.resetPoint();
+			}
+			
+			@Override
+			public void mouseEntered(MouseEvent e)
+			{
+			}
+			
+			@Override
+			public void mouseExited(MouseEvent e)
+			{
+				canvas.resetPoint();
 			}
 		});
 	}
