@@ -75,7 +75,12 @@ public class ShapeCanvas extends JPanel
 	
 	public void clear()
 	{
-		
+		canvasImage = new BufferedImage(600, 600, BufferedImage.TYPE_INT_ARGB);
+		ellipseList.clear();
+		triangleList.clear();
+		polygonList.clear();
+		rectangleList.clear();
+		updateImage();
 	}
 	
 	public void changeBackground()
@@ -91,17 +96,62 @@ public class ShapeCanvas extends JPanel
 	
 	public void save()
 	{
-		
+		try
+		{
+			JFileChooser saveDialog = new JFileChooser();
+			saveDialog.showSaveDialog(app.getArtFrame());
+			String savePath = saveDialog.getSelectedFile().getPath();
+			ImageIO.write(canvasImage, "PNG", new File(savePath));
+		}
+		catch (IOException error)
+		{
+			app.handleErrors(error);
+		}
 	}
 	
 	private Color randomColor()
 	{
-		return null;
+		int red = (int)(Math.random() * 256);
+		int green = (int)(Math.random() * 256);
+		int blue = (int)(Math.random() * 256);
+		int alpha = (int)(Math.random() * 256);
+		
+		return new Color(red, green, blue, alpha);
 	}
 	
 	private void updateImage()
 	{
+		Graphics2D currentGraphics = (Graphics2D) canvasImage.getGraphics();
 		
+		for (Ellipse2D current : ellipseList)
+		{
+			currentGraphics.setColor(randomColor());
+			currentGraphics.setStroke(new BasicStroke(2));
+			currentGraphics.fill(current);
+			currentGraphics.setColor(randomColor());
+			currentGraphics.draw(current);
+		}
+		
+		for (Polygon currentTriangle : triangleList)
+		{
+			currentGraphics.setColor(randomColor());
+			currentGraphics.fill(currentTriangle);
+		}
+		
+		for (Polygon currentPolygon : polygonList)
+		{
+			currentGraphics.setColor(randomColor());
+			currentGraphics.setStroke(new BasicStroke(4));
+			currentGraphics.draw(currentPolygon);
+		}
+		
+		for (Rectangle currentRectangle : rectangleList)
+		{
+			currentGraphics.setColor(randomColor());
+			currentGraphics.fill(currentRectangle);
+		}
+		currentGraphics.dispose();
+		repaint();
 	}
 	
 //	public void drawOnCanvas(int xPosition, int yPosition)
